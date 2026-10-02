@@ -5,6 +5,10 @@ import {
 import { BACKEND_BASE_URL } from "../components/constants";
 import type { ListResponse } from "@/types";
 
+if (!BACKEND_BASE_URL) {
+  throw new Error("Missing environment variable: VITE_BACKEND_BASE_URL");
+}
+
 const options: CreateDataProviderOptions = {
   getList: {
     getEndpoint: ({ resource }) => resource,
