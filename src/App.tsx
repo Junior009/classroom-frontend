@@ -32,6 +32,7 @@ import SubjectsCreate from "./pages/subjects/create";
 import {Home} from "lucide-react";
 import {BookOpen} from "lucide-react";
 
+
 function App() {
   return (
     <BrowserRouter>
