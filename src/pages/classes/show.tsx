@@ -1,0 +1,130 @@
+import React from 'react'
+import { useShow } from '@refinedev/core'
+import { ClassDetails } from '@/types'
+import { ShowView, ShowViewHeader } from '@/components/refine-ui/views/show-view'
+import {Card} from "@/components/ui/card"
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@radix-ui/react-separator'
+import { Button } from '@/components/ui/button'
+import {AdvancedImage} from "@cloudinary/react"
+import {bannerPhoto} from "@/lib/cloudinary"
+
+
+const Show = () =>{
+    const {query} = useShow<ClassDetails>({resource: 'classes'});
+
+    const classDetails = query.data?.data;
+    const { isLoading, isError} = query;
+
+    if(isLoading || isError || !classDetails) {
+        return(
+            <ShowView className='class-view class-show'>
+
+            </ShowView>
+        )
+    }
+
+    const teacherName = classDetails.teacher?.name ?? 'Unknown';
+
+    const teachersInitials =
+        teacherName
+        .split(' ')
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase())
+        .join('')
+
+    const placeholderUrl = `https://placehold.co/600x400?text=${encodeURIComponent(teachersInitials || 'NA')}`;
+
+    const  {        name,
+        description,
+        status,
+        capacity,
+        bannerUrl,
+        bannerCldPubId,
+        subject,
+        teacher,
+        department,} = classDetails;
+
+        console.log(classDetails)
+    return(
+            <ShowView className='class-view class-show'>
+                <ShowViewHeader resource='classes' title='Class Details' />
+
+                <div className='banner'>
+                    <div>
+                        {bannerCldPubId ? <AdvancedImage alt="Class Banner" cldImg={bannerPhoto(
+                            bannerCldPubId ?? '', name)}/> : <div className='placeholder'/>}
+                    </div>
+                </div>
+
+                <Card className="details-card">
+                    <div className="details-header">
+                        <div>
+                            <h1>{name}</h1>
+                            <p>{description}</p>
+                        </div>
+
+                        <div>
+                            <Badge variant="outline">{capacity} spots</Badge>
+                            <Badge variant={status === 'active' ? "default" : "secondary"} data-status={status}>{status}</Badge>
+                        </div>
+                    </div>
+                        <div className='details-grid'>
+                            <div className='instructor'>
+                                <p>Instructor</p>
+                                <div>
+                                    <img src={teacher?.image ?? placeholderUrl}
+                                    alt={teacherName} />
+
+                                    <div>
+                                        <p>{teacherName}</p>
+                                        <p>{teacher?.email}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='department'>
+                                <p>Department</p>
+
+                                <div>
+                                    <p>{department?.name}</p>
+                                    <p>{department?.description}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    
+
+                    <Separator />
+
+                        <div className='subject'>
+                            <p>Subject</p>
+
+                            <div>
+                                <Badge variant="outline">Code: {subject?.code}</Badge>
+                                <p>{subject?.name}</p>
+                                <p>{subject?.description}</p>
+                            </div>
+                        </div>
+
+                     <Separator />
+
+                     <div className='join'>
+                        <h2>Join Class</h2>
+
+                        <ol>
+                            <li>Ask your teacher for the invite Code</li>
+                            <li>Click on "Join Class" button</li>
+                            <li>Paste the code and click "join"</li>
+                        </ol>
+
+                        <Button size="lg" className="w-full"> Join Class</Button>
+
+                     </div>
+                </Card>
+            </ShowView> 
+    )
+}
+
+export default Show
