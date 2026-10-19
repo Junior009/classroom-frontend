@@ -25,8 +25,7 @@ import { useNotificationProvider } from "./components/refine-ui/notification/use
 import { Toaster } from "@/components/refine-ui/notification/toaster";
 import { ThemeProvider } from "./components/refine-ui/theme/theme-provider";
 import "./App.css";
-import "./pages/dashboard";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/Dashboard";
 import SubjectsList from "./pages/subjects/List";
 import SubjectsCreate from "./pages/subjects/create";
 import ClassesList from "./pages/classes/list";
