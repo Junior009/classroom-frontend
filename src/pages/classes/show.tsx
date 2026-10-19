@@ -53,8 +53,8 @@ const Show = () =>{
 
                 <div className='banner'>
                     <div>
-                        {bannerUrl ? <AdvancedImage alt="Class Banner" cldImg={bannerPhoto
-                        (bannerCldPubId ?? '', name)}/> : <div className='placeholder'/>}
+                        {bannerCldPubId ? <AdvancedImage alt="Class Banner" cldImg={bannerPhoto(
+                            bannerCldPubId ?? '', name)}/> : <div className='placeholder'/>}
                     </div>
                 </div>
 
