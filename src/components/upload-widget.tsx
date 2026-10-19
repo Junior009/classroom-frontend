@@ -34,7 +34,7 @@ const UploadWidget = ({value = null, onChange, disabled = false}) => {
                     folder: "uploads",
                     maxFileSize: 5 * 1024 * 1024, // 5MB
                     clientAllowedFormats: ["png", "jpg", "jpeg", "webp"],
-                    sources: ["local", "url", "camera"],
+                    sources: ["local", "url", "camera", "unsplash"],
                 },
                 (error, result) => {
                     if (!error && result.event === "success") {
