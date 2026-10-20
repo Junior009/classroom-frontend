@@ -23,6 +23,14 @@ export const subjectSchema = z.object({
     }).int().positive("Please select a department"),
 });
 
+export const departmentSchema = z.object({
+    name: z.string().min(3, "Department name must be at least 3 characters"),
+    code: z.string().min(5, "Department code must be at least 5 characters"),
+    description: z
+        .string({ required_error: "Description is required" })
+        .min(5, "Description must be at least 5 characters"),
+});
+
 const scheduleSchema = z.object({
     day: z.string().min(1, "Day is required"),
     startTime: z.string().min(1, "Start time is required"),

@@ -31,6 +31,9 @@ import SubjectsCreate from "./pages/subjects/create";
 import ClassesList from "./pages/classes/list";
 import ClassesCreate from "./pages/classes/create";
 import ClassesShow from "./pages/classes/show";
+
+import DepartmentsList from "./pages/departments/list";
+import DepartmentsCreate from "./pages/departments/create";
 import {GraduationCap, Home} from "lucide-react";
 import {BookOpen} from "lucide-react";
 
@@ -70,6 +73,13 @@ function App() {
                     create: '/classes/create',
                     show: '/classes/show/:id',
                     meta: {label: 'Classes', icon: <GraduationCap />}
+                  },
+                  {
+                    name: 'departments',
+                    list: '/departments',
+                    create: '/departments/create',
+                    show: '/departments/show/:id',
+                    meta: {label: 'Departments', icon: <GraduationCap />}
                   }
                 ]
               }
@@ -88,9 +98,15 @@ function App() {
                       <Route path="create" element={<SubjectsCreate />} />
                     </Route>
 
-                      <Route path="classes">
+                    <Route path="classes">
                       <Route index element={<ClassesList />} />
                       <Route path="create" element={<ClassesCreate />} />
+                      <Route path="show/:id" element={<ClassesShow />} />
+                    </Route>
+
+                   <Route path="departments">
+                      <Route index element={<DepartmentsList />} />
+                      <Route path="create" element={<DepartmentsCreate />} />
                       <Route path="show/:id" element={<ClassesShow />} />
                     </Route>
                 </Route>
