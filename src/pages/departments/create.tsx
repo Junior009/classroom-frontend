@@ -25,7 +25,7 @@ const DepartmentsCreate = () => {
     const form = useForm({
         resolver: zodResolver(departmentSchema),
         refineCoreProps: {
-            resource: "Departments",
+            resource: "departments",
             action: "create",
         },
     });

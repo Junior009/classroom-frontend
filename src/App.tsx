@@ -28,12 +28,15 @@ import "./App.css";
 import Dashboard from "./pages/Dashboard";
 import SubjectsList from "./pages/subjects/List";
 import SubjectsCreate from "./pages/subjects/create";
+import SubjectsEdit from "./pages/subjects/edit";
 import ClassesList from "./pages/classes/list";
 import ClassesCreate from "./pages/classes/create";
+import ClassesEdit from "./pages/classes/edit";
 import ClassesShow from "./pages/classes/show";
 
 import DepartmentsList from "./pages/departments/list";
 import DepartmentsCreate from "./pages/departments/create";
+import DepartmentsEdit from "./pages/departments/edit";
 import {GraduationCap, Home} from "lucide-react";
 import {BookOpen} from "lucide-react";
 
@@ -65,12 +68,14 @@ function App() {
                     name: 'subjects',
                     list: '/subjects',
                     create: '/subjects/create',
+                    edit: '/subjects/edit/:id',
                     meta: {label: 'Subject', icon: <BookOpen />}
                   },
                   {
                     name: 'classes',
                     list: '/classes',
                     create: '/classes/create',
+                    edit: '/classes/edit/:id',
                     show: '/classes/show/:id',
                     meta: {label: 'Classes', icon: <GraduationCap />}
                   },
@@ -78,7 +83,7 @@ function App() {
                     name: 'departments',
                     list: '/departments',
                     create: '/departments/create',
-                    show: '/departments/show/:id',
+                    edit: '/departments/edit/:id',
                     meta: {label: 'Departments', icon: <GraduationCap />}
                   }
                 ]
@@ -96,18 +101,20 @@ function App() {
                     <Route path="subjects">
                       <Route index element={<SubjectsList />} />
                       <Route path="create" element={<SubjectsCreate />} />
+                      <Route path="edit/:id" element={<SubjectsEdit />} />
                     </Route>
 
                     <Route path="classes">
                       <Route index element={<ClassesList />} />
                       <Route path="create" element={<ClassesCreate />} />
+                      <Route path="edit/:id" element={<ClassesEdit />} />
                       <Route path="show/:id" element={<ClassesShow />} />
                     </Route>
 
                    <Route path="departments">
                       <Route index element={<DepartmentsList />} />
                       <Route path="create" element={<DepartmentsCreate />} />
-                      <Route path="show/:id" element={<ClassesShow />} />
+                      <Route path="edit/:id" element={<DepartmentsEdit />} />
                     </Route>
                 </Route>
               </Routes>
