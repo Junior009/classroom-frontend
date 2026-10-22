@@ -15,6 +15,8 @@ import { Subject } from '@/types'
 import { Badge } from '@/components/ui/badge.tsx'
 import { ColumnDef } from '@tanstack/react-table'
 import { useMemo} from 'react'
+import { EditButton } from '@/components/refine-ui/buttons/edit'
+import { DeleteButton } from '@/components/refine-ui/buttons/delete'
 
 const SubjectsList = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -59,6 +61,17 @@ const SubjectsList = () => {
                 size: 300,
                 header: () => <p className='column-title ml -2 '>Description</p>,
                 Cell: ({ getValue}) => <span className='text-truncate'>{getValue<string>()}</span>
+            },
+            {
+                id: 'actions',
+                size: 180,
+                header: () => <p className='column-title'>Actions</p>,
+                cell: ({ row }) => (
+                    <div className='flex items-center gap-2'>
+                        <EditButton resource='subjects' recordItemId={row.original.id} variant='outline' size='sm'>Editar</EditButton>
+                        <DeleteButton resource='subjects' recordItemId={row.original.id} size='sm'>Eliminar</DeleteButton>
+                    </div>
+                )
             }
         ], []),
         refineCoreProps: {
