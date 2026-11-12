@@ -4,7 +4,7 @@ import React from "react";
 import {
   useMenu,
   useLink,
-  useRefineOptions,
+  useGetIdentity,
   type TreeMenuItem,
 } from "@refinedev/core";
 import {
@@ -15,6 +15,7 @@ import {
   useSidebar as useShadcnSidebar,
   SidebarTrigger as ShadcnSidebarTrigger,
 } from "@/components/ui/sidebar";
+import { BookOpen } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,10 +30,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronRight, ListIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { User } from "@/types";
 
 export function Sidebar() {
   const { open } = useShadcnSidebar();
   const { menuItems, selectedKey } = useMenu();
+  const { data: user } = useGetIdentity<User>();
+  const visibleMenuItems = menuItems.filter((item) => {
+    const roles = item.meta?.roles as User["role"][] | undefined;
+    return !roles || (!!user?.role && roles.includes(user.role));
+  });
 
   return (
     <ShadcnSidebar collapsible="icon" className={cn("border-none")}>
@@ -55,7 +62,7 @@ export function Sidebar() {
           }
         )}
       >
-        {menuItems.map((item: TreeMenuItem) => (
+        {visibleMenuItems.map((item: TreeMenuItem) => (
           <SidebarItem
             key={item.key || item.name}
             item={item}
@@ -210,7 +217,6 @@ function SidebarItemLink({ item, selectedKey }: MenuItemProps) {
 }
 
 function SidebarHeader() {
-  const { title } = useRefineOptions();
   const { open, isMobile } = useShadcnSidebar();
 
   return (
@@ -243,7 +249,7 @@ function SidebarHeader() {
           }
         )}
       >
-        <div>{title.icon}</div>
+        <BookOpen aria-hidden="true" className="size-5 shrink-0" />
         <h2
           className={cn(
             "text-sm",
@@ -256,7 +262,7 @@ function SidebarHeader() {
             }
           )}
         >
-          {title.text}
+          Classroom
         </h2>
       </div>
 

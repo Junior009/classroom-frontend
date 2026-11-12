@@ -42,9 +42,24 @@ const options: CreateDataProviderOptions = {
 
         const value = String(filter.value);
 
+          if (resource === 'classes') {
+            if (field === 'teacher') params.teacher = value;
+            if (field === 'teacherId') params.teacherId = value;
+            if (field === 'name' || field === 'search') params.search = value;
+          }
+
           if(resource === 'subjects') {
             if (field === 'department') params.department = value;
             if(field === 'name' || field === 'code') params.search = value;
+          }
+
+          if (resource === 'users') {
+            if (field === 'role') params.role = value;
+            if (field === 'name' || field === 'email' || field === 'search') params.search = value;
+          }
+
+          if (resource === 'student/classes' && (field === 'name' || field === 'search')) {
+            params.search = value;
           }
         })
 
@@ -72,6 +87,7 @@ const options: CreateDataProviderOptions = {
     buildBodyParams: async ({ variables}) => variables,
 
     mapResponse: async (response) => {
+      if (!response.ok) throw await buildHttpError(response);
       const json: CreateResponse = await response.json();
 
       return json.data ?? [];
@@ -81,6 +97,7 @@ const options: CreateDataProviderOptions = {
   getOne: {
     getEndpoint: ({resource, id}) => `${resource}/${id}`,
     mapResponse: async (response) => {
+      if (!response.ok) throw await buildHttpError(response);
       const json: GetOneResponse = await response.json();
       return json.data ?? [];
     }
@@ -103,12 +120,14 @@ const options: CreateDataProviderOptions = {
     mapResponse: async (response) => {
       if (!response.ok) throw await buildHttpError(response);
 
-      const json: CreateResponse = await response.json();
+      const json: CreateResponse<Record<string, unknown>> = await response.json();
       return json.data;
     },
   }
 };
 
-const { dataProvider } = createDataProvider(BACKEND_BASE_URL, options);
+const { dataProvider } = createDataProvider(BACKEND_BASE_URL, options, {
+  credentials: "include",
+});
 
 export { dataProvider };
