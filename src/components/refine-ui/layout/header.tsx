@@ -1,8 +1,5 @@
-import {
-  useRefineOptions,
-  useActiveAuthProvider,
-  useLogout,
-} from "@refinedev/core";
+import { useActiveAuthProvider, useLogout } from "@refinedev/core";
+import { BookOpen } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -49,8 +46,6 @@ function DesktopHeader() {
 function MobileHeader() {
   const { open, isMobile } = useSidebar();
 
-  const { title } = useRefineOptions();
-
   return (
     <header
       className={cn(
@@ -95,7 +90,7 @@ function MobileHeader() {
           }
         )}
       >
-        <div>{title.icon}</div>
+        <BookOpen aria-hidden="true" className="size-5 shrink-0" />
         <h2
           className={cn(
             "text-sm",
@@ -108,7 +103,7 @@ function MobileHeader() {
             }
           )}
         >
-          {title.text}
+          Classroom
         </h2>
       </div>
 

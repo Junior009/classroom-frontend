@@ -1,4 +1,4 @@
-import { useList } from "@refinedev/core";
+import { useGetIdentity, useList } from "@refinedev/core";
 import { ArrowRight, BookOpen, Building2, GraduationCap, Plus, RefreshCw, Users } from "lucide-react";
 import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,7 @@ const formatTotal = (value: number | undefined, isLoading: boolean, isError: boo
 };
 
 const Dashboard = () => {
+  const { data: user } = useGetIdentity<User>();
   const classesQuery = useList<DashboardClass>({
     resource: "classes",
     pagination: { currentPage: 1, pageSize: 5 },
@@ -100,9 +101,9 @@ const Dashboard = () => {
       <header className="flex flex-col gap-4 border-b pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="mb-2 text-sm font-semibold uppercase text-primary">Classroom · Administração</p>
-          <h1 className="page-title">Visão geral</h1>
+          <h1 className="page-title">Bem-vindo, {user?.name ?? ""}</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Acompanhe os principais registos e aceda rapidamente às áreas da plataforma.
+            Visão geral da plataforma. Acompanhe os principais registos e aceda rapidamente às áreas de gestão.
           </p>
         </div>
         <Button type="button" variant="outline" onClick={refreshDashboard}>

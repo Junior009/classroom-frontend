@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
-import { CircleHelp } from "lucide-react";
+import { BookOpen, CircleHelp } from "lucide-react";
 
-import { useLogin, useRefineOptions, useLink } from "@refinedev/core";
+import { useLogin, useLink } from "@refinedev/core";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,8 +27,6 @@ export const SignInForm = () => {
   const [password, setPassword] = useState("");
 
   const Link = useLink();
-
-  const { title } = useRefineOptions();
 
   const { mutate: login } = useLogin();
 
@@ -65,14 +63,9 @@ export const SignInForm = () => {
         "min-h-svh"
       )}
     >
-      <div className={cn("flex", "items-center", "justify-center")}>
-        {title.icon && (
-          <div
-            className={cn("text-foreground", "[&>svg]:w-12", "[&>svg]:h-12")}
-          >
-            {title.icon}
-          </div>
-        )}
+      <div className="flex items-center justify-center gap-2 text-foreground">
+        <BookOpen aria-hidden="true" className="size-10" />
+        <span className="text-xl font-semibold">Classroom</span>
       </div>
 
       <Card className={cn("sm:w-[456px]", "p-12", "mt-6")}>
