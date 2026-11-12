@@ -21,7 +21,7 @@ export const authProvider: AuthProvider = {
       };
     }
 
-    const { error } = await authClient.signIn.email({
+    const { data, error } = await authClient.signIn.email({
       email,
       password,
       rememberMe: rememberMe === true,
@@ -31,8 +31,15 @@ export const authProvider: AuthProvider = {
       return { success: false, error: getError(error.message) };
     }
 
-    const { data: session } = await authClient.getSession();
-    return { success: true, redirectTo: getRoleHome(session?.user.role) };
+    const role = (data?.user as { role?: unknown } | undefined)?.role;
+    if (role !== "admin" && role !== "teacher" && role !== "student") {
+      return {
+        success: false,
+        error: getError("The account has no valid application role."),
+      };
+    }
+
+    return { success: true, redirectTo: getRoleHome(role) };
   },
   register: async ({ name, email, password }) => {
     if (

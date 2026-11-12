@@ -36,6 +36,7 @@ export const SignInForm = () => {
     login({
       email,
       password,
+      rememberMe,
     });
   };
 
@@ -107,9 +108,11 @@ export const SignInForm = () => {
             >
               <Label htmlFor="password">Password</Label>
               <InputPassword
+                id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                autoComplete="current-password"
               />
             </div>
 
